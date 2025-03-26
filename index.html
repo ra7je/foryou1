@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Proposal</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            text-align: center;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #loveText {
+            font-size: 40px;
+            font-weight: bold;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInLetter 0.5s forwards;
+            font-size: 45px;
+            font-weight: bold;
+        }
+
+        @keyframes fadeInLetter {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .color1 { color: #ff4d6d; }
+        .color2 { color: #ff8a5c; }
+        .color3 { color: #ffbe76; }
+        .color4 { color: #d63447; }
+        .color5 { color: #ff6363; }
+        .color6 { color: #ffafbd; }
+        .color7 { color: #f48fb1; }
+
+        .quote {
+            position: absolute;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+            text-align: center;
+            animation: float 6s linear forwards;
+        }
+
+        @keyframes float {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        #playButton {
+            font-size: 20px;
+            padding: 12px 24px;
+            cursor: pointer;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 4px 10px rgba(255, 0, 85, 0.5);
+        }
+
+        #playButton:hover {
+            background: #e63950;
+        }
+
+        /* Floating Hearts Effect */
+        .heart {
+            position: fixed;
+            color: red;
+            font-size: 30px;
+            opacity: 0.7;
+            animation: floatHearts linear infinite;
+        }
+
+        @keyframes floatHearts {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="loveText"></h1>
+
+    <button id="playButton">Click Here ❤️</button>
+    
+    <audio id="bgMusic" loop>
+        <source src="romantic-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loveText = "I LOVE YOU, SWEETHEART!";
+            const loveElement = document.getElementById("loveText");
+            const playButton = document.getElementById("playButton");
+            const bgMusic = document.getElementById("bgMusic");
+
+            const colors = ["color1", "color2", "color3", "color4", "color5", "color6", "color7"];
+            const quotes = [
+                "Nannu piluvani nee swaram kooda naa gundello swargam laa anipistundi❤️",
+                "Nuvvu choosina prathi kshanam naa hrudayam lo prema chivaraku veedani oka kavyam… 💖",
+                "Naa oopiri lo pranam unte… aa pranam lo nuvvu undali…🎶",
+                "Naa jeevitham lo andam, aanandam, ardam anni neee thone kalisi unnayi 💘",
+                "Nannu vadili poyina suryudu poddhune malli leputhadu… kaani nuvvu vadili poyavante, naa gunde dhadulu aaga potayi… nuvvu naa jeevitham chivaraku oka needa avvali!💓",
+                "Nee sneham oka mallepula vaasam, Naa jeevitam lo amrutha rasam!🥰",
+                "Oka janma saripodu nee sneham kosam, Ananta janmala aasakthi puttindi nee kosam!💗"
+            ];
+
+            let quoteIndex = 0;
+
+            function showLoveText() {
+                loveElement.innerHTML = "";
+                
+                let i = 0;
+                function typeText() {
+                    if (i < loveText.length) {
+                        let span = document.createElement("span");
+                        span.innerHTML = loveText[i];
+                        span.classList.add("letter", colors[i % colors.length]);
+                        span.style.animationDelay = `${i * 0.2}s`;
+                        loveElement.appendChild(span);
+                        i++;
+                        setTimeout(typeText, 150);
+                    }
+                }
+                typeText();
+            }
+
+            function showQuotes() {
+                if (quoteIndex >= quotes.length) {
+                    quoteIndex = 0;
+                }
+
+                let quoteDiv = document.createElement("div");
+                quoteDiv.classList.add("quote");
+                quoteDiv.innerText = quotes[quoteIndex];
+
+                let randomX = Math.random() * window.innerWidth;
+                quoteDiv.style.left = `${randomX}px`;
+                quoteDiv.style.top = "100px";
+
+                document.body.appendChild(quoteDiv);
+                quoteIndex++;
+
+                setTimeout(showQuotes, 7000);
+            }
+
+            function createHearts() {
+                setInterval(() => {
+                    let heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    heart.innerHTML = "❤️";
+                    document.body.appendChild(heart);
+
+                    let size = Math.random() * 20 + 20;
+                    let posX = Math.random() * window.innerWidth;
+
+                    heart.style.left = `${posX}px`;
+                    heart.style.fontSize = `${size}px`;
+                    heart.style.animationDuration = `${Math.random() * 5 + 3}s`;
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 7000);
+                }, 400);
+            }
+
+            playButton.addEventListener("click", () => {
+                bgMusic.play().then(() => {
+                    showLoveText();
+                    showQuotes();
+                    createHearts();
+                    playButton.style.display = "none";
+                }).catch(error => {
+                    console.log("Autoplay blocked. User interaction required.", error);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
